@@ -1,57 +1,188 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Controle de Horas</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Controle de Horas | RH</title>
 
-  <link rel="stylesheet" href="style.css" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: #f2f4f8;
+      color: #333;
+    }
+
+    header {
+      background: linear-gradient(135deg, #3b82f6, #2563eb);
+      color: white;
+      padding: 20px;
+      border-radius: 0 0 20px 20px;
+    }
+
+    header h2 {
+      margin: 0;
+      font-size: 22px;
+    }
+
+    header span {
+      font-size: 14px;
+      opacity: 0.9;
+    }
+
+    .container {
+      padding: 16px;
+      max-width: 480px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+    }
+
+    .saldo {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .saldo strong {
+      font-size: 28px;
+      color: #2563eb;
+    }
+
+    .badge {
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .pendente { background: #fef3c7; color: #92400e; }
+    .aprovado { background: #dcfce7; color: #166534; }
+    .recusado { background: #fee2e2; color: #991b1b; }
+
+    select, input, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul li {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+      font-size: 14px;
+    }
+
+    .gestor-actions button {
+      margin-top: 6px;
+      font-size: 12px;
+    }
+
+    footer {
+      height: 60px;
+    }
+
+    #admArea {
+      display: none;
+    }
+  </style>
 </head>
 
 <body>
-  <div class="container">
 
-    <header class="top">
-      <h2 id="nome">Olá 👋</h2>
-      <p class="subtitle">Acompanhe suas horas em tempo real</p>
-    </header>
+<header>
+  <h2 id="nome">Usuário</h2>
+  <span id="perfil">Perfil</span>
+</header>
 
-    <div class="card saldo destaque">
-      <span>Saldo disponível</span>
-      <strong id="saldo">0h</strong>
-    </div>
+<div class="container">
 
-    <div id="admArea" class="card hidden">
-      <h3>👥 Colaboradores</h3>
-      <label for="colaboradores">Selecione um colaborador:</label>
-      <select id="colaboradores" onchange="trocarColaborador()"></select>
-
-    <div class="card">
-      <h3>📈 Evolução</h3>
-      <canvas id="grafico"></canvas>
-    </div>
-
-    <div class="card">
-      <h3>🕒 Histórico</h3>
-
-      <div class="table-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>Data</th>
-              <th>Tipo</th>
-              <th>Horas</th>
-              <th>Saldo</th>
-            </tr>
-          </thead>
-          <tbody id="historico"></tbody>
-        </table>
-      </div>
-    </div>
-
+  <!-- SALDO -->
+  <div class="card saldo">
+    <span>Saldo de Horas</span>
+    <strong id="saldo">0h</strong>
   </div>
 
-  <script src="script.js"></script>
+  <!-- ADM / GESTOR -->
+  <div class="card" id="admArea">
+    <h3>Colaboradores</h3>
+    <select id="colaboradores" title="Selecione um colaborador" onchange="trocarColaborador()"></select>
+  </div>
+
+  <!-- LANÇAR HORAS -->
+  <div class="card">
+    <h3>Lançar Horas</h3>
+    <select id="tipo" title="Tipo de lançamento">
+      <option value="Debito">Débito</option>
+      <option value="Credito">Crédito</option>
+    </select>
+    <input type="number" id="horas" title="Quantidade de horas" placeholder="Quantidade de horas">
+    <input type="text" id="obs" title="Observação" placeholder="Observação (opcional)">
+    <button type="button" onclick="lancar()">Salvar</button>
+  </div>
+
+  <!-- SOLICITAR FÉRIAS -->
+  <div class="card" id="feriasUser">
+    <h3>Solicitar Férias</h3>
+    <input type="date" id="inicio" title="Data de início das férias">
+    <input type="date" id="fim" title="Data de término das férias">
+    <input type="text" id="obsFerias" title="Observação" placeholder="Observação">
+    <button type="button" onclick="solicitarFerias()">Solicitar</button>
+  </div>
+
+  <!-- FÉRIAS -->
+  <div class="card">
+    <h3>Minhas Solicitações</h3>
+    <ul id="listaFerias"></ul>
+  </div>
+
+  <!-- GRÁFICO -->
+  <div class="card">
+    <h3>Projeção</h3>
+    <canvas id="grafico"></canvas>
+  </div>
+
+</div>
+
+<footer></footer>
+
+<script src="script.js"></script>
 </body>
 </html>
