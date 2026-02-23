@@ -1,188 +1,111 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Controle de Horas | RH</title>
+<meta charset="UTF-8">
+<title>Controle de Horas e Férias</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    }
-
-    body {
-      margin: 0;
-      background: #f2f4f8;
-      color: #333;
-    }
-
-    header {
-      background: linear-gradient(135deg, #3b82f6, #2563eb);
-      color: white;
-      padding: 20px;
-      border-radius: 0 0 20px 20px;
-    }
-
-    header h2 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    header span {
-      font-size: 14px;
-      opacity: 0.9;
-    }
-
-    .container {
-      padding: 16px;
-      max-width: 480px;
-      margin: auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 16px;
-      margin-bottom: 16px;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-    }
-
-    .saldo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .saldo strong {
-      font-size: 28px;
-      color: #2563eb;
-    }
-
-    .badge {
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-      font-weight: 600;
-      display: inline-block;
-    }
-
-    .pendente { background: #fef3c7; color: #92400e; }
-    .aprovado { background: #dcfce7; color: #166534; }
-    .recusado { background: #fee2e2; color: #991b1b; }
-
-    select, input, button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 8px;
-      border-radius: 10px;
-      border: 1px solid #ddd;
-      font-size: 14px;
-    }
-
-    button {
-      background: #2563eb;
-      color: white;
-      border: none;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 12px;
-    }
-
-    button:hover {
-      opacity: 0.9;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-
-    ul li {
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
-      font-size: 14px;
-    }
-
-    .gestor-actions button {
-      margin-top: 6px;
-      font-size: 12px;
-    }
-
-    footer {
-      height: 60px;
-    }
-
-    #admArea {
-      display: none;
-    }
-  </style>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f6fb;
+  margin: 0;
+}
+header {
+  background: #4f46e5;
+  color: white;
+  padding: 16px;
+}
+.card {
+  background: white;
+  margin: 16px;
+  padding: 16px;
+  border-radius: 12px;
+}
+.badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+}
+.aprovado { background: #16a34a; color: white; }
+.recusado { background: #dc2626; color: white; }
+.pendente { background: #ca8a04; color: white; }
+button {
+  background: #4f46e5;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+}
+input {
+  padding: 8px;
+  width: 100%;
+  margin-bottom: 8px;
+}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h2 id="nome">Usuário</h2>
-  <span id="perfil">Perfil</span>
+  <h2 id="nome">Carregando...</h2>
 </header>
 
-<div class="container">
-
-  <!-- SALDO -->
-  <div class="card saldo">
-    <span>Saldo de Horas</span>
-    <strong id="saldo">0h</strong>
-  </div>
-
-  <!-- ADM / GESTOR -->
-  <div class="card" id="admArea">
-    <h3>Colaboradores</h3>
-    <select id="colaboradores" title="Selecione um colaborador" onchange="trocarColaborador()"></select>
-  </div>
-
-  <!-- LANÇAR HORAS -->
-  <div class="card">
-    <h3>Lançar Horas</h3>
-    <select id="tipo" title="Tipo de lançamento">
-      <option value="Debito">Débito</option>
-      <option value="Credito">Crédito</option>
-    </select>
-    <input type="number" id="horas" title="Quantidade de horas" placeholder="Quantidade de horas">
-    <input type="text" id="obs" title="Observação" placeholder="Observação (opcional)">
-    <button type="button" onclick="lancar()">Salvar</button>
-  </div>
-
-  <!-- SOLICITAR FÉRIAS -->
-  <div class="card" id="feriasUser">
-    <h3>Solicitar Férias</h3>
-    <input type="date" id="inicio" title="Data de início das férias">
-    <input type="date" id="fim" title="Data de término das férias">
-    <input type="text" id="obsFerias" title="Observação" placeholder="Observação">
-    <button type="button" onclick="solicitarFerias()">Solicitar</button>
-  </div>
-
-  <!-- FÉRIAS -->
-  <div class="card">
-    <h3>Minhas Solicitações</h3>
-    <ul id="listaFerias"></ul>
-  </div>
-
-  <!-- GRÁFICO -->
-  <div class="card">
-    <h3>Projeção</h3>
-    <canvas id="grafico"></canvas>
-  </div>
-
+<div class="card">
+  <h3>Solicitar Férias</h3>
+  <input type="date" id="inicio" placeholder="Data de início">
+  <input type="date" id="fim" placeholder="Data de término">
+  <button type="button" onclick="solicitarFerias()">Solicitar</button>
 </div>
 
-<footer></footer>
+<div class="card">
+  <h3>Minhas Solicitações</h3>
+  <div id="ferias"></div>
+</div>
 
-<script src="script.js"></script>
+<script>
+const API = "https://script.google.com/macros/s/SEU_ID_AQUI/exec";
+const token = new URLSearchParams(location.search).get("token");
+
+async function carregar() {
+  const r = await fetch(API + "?token=" + token);
+  const d = await r.json();
+
+  if (d.erro) {
+    document.body.innerHTML = d.erro;
+    return;
+  }
+
+  document.getElementById("nome").innerText = d.usuario.nome;
+
+  const f = document.getElementById("ferias");
+  f.innerHTML = "";
+
+  d.ferias.forEach(x => {
+    const div = document.createElement("div");
+    div.innerHTML = `
+      ${x.Inicio} → ${x.Fim}
+      <span class="badge ${x.Status.toLowerCase()}">${x.Status}</span>
+    `;
+    f.appendChild(div);
+  });
+}
+
+async function solicitarFerias() {
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      tipo: "FERIAS",
+      token,
+      inicio: inicio.value,
+      fim: fim.value
+    })
+  });
+  carregar();
+}
+
+carregar();
+</script>
+
 </body>
 </html>
