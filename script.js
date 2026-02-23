@@ -1,4 +1,4 @@
-const API = "https://script.google.com/macros/s/AKfycbwyJ06iZYT-EW92VLwi747c_92_PZrALxVJUtqtvObPcVbpmGOeObazBzF0MZnwVY4K/exec";
+const API = "https://script.google.com/macros/s/AKfycbwNmJjk_YVxekZDRLtF8JmsLktyo-IWE5ls2sZTxnQCnAmjjkXnFxN_pCLwhdVONQlM/exec";
 
 const params = new URLSearchParams(window.location.search);
 const token = params.get("token");
