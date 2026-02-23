@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(180deg, #eef2ff, #f9fafb);
+  color: #111827;
+}
+
+.container {
+  max-width: 420px;
+  margin: auto;
+  padding: 16px;
+}
+
+/* TOPO */
+.top {
+  margin-bottom: 16px;
+}
+
+.top h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.subtitle {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+/* CARDS */
+.card {
+  background: white;
+  border-radius: 20px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,.05);
+}
+
+/* SALDO */
+.saldo {
+  text-align: center;
+}
+
+.saldo span {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.saldo strong {
+  font-size: 34px;
+  display: block;
+  margin-top: 6px;
+}
+
+.destaque {
+  background: linear-gradient(135deg, #6366f1, #3b82f6);
+  color: white;
+}
+
+/* FORM */
+select, input {
+  width: 100%;
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid #e5e7eb;
+  font-size: 15px;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 14px;
+  border-radius: 16px;
+  border: none;
+  font-size: 16px;
+  font-weight: 600;
+  background: #6366f1;
+  color: white;
+}
+
+/* TABELA */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+th {
+  text-align: left;
+  color: #6b7280;
+  padding-bottom: 8px;
+}
+
+td {
+  padding: 8px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+/* ADM */
+#admArea select {
+  margin-top: 10px;
+}
+
+/* MOBILE */
+@media (max-width: 480px) {
+  canvas {
+    max-height: 200px;
+  }
+}

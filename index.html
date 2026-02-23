@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Controle de Horas</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+  <div class="container">
+
+    <header class="top">
+      <h2 id="nome">Olá 👋</h2>
+      <p class="subtitle">Acompanhe suas horas em tempo real</p>
+    </header>
+
+    <div class="card saldo destaque">
+      <span>Saldo disponível</span>
+      <strong id="saldo">0h</strong>
+    </div>
+
+    <div id="admArea" class="card hidden">
+      <h3>👥 Colaboradores</h3>
+      <label for="colaboradores">Selecione um colaborador:</label>
+      <select id="colaboradores" onchange="trocarColaborador()"></select>
+
+    <div class="card">
+      <h3>📈 Evolução</h3>
+      <canvas id="grafico"></canvas>
+    </div>
+
+    <div class="card">
+      <h3>🕒 Histórico</h3>
+
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Tipo</th>
+              <th>Horas</th>
+              <th>Saldo</th>
+            </tr>
+          </thead>
+          <tbody id="historico"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
